@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{(data?.title || 'confirm-dialog.title') | translate}}</h2>
+
+<mat-dialog-content>
+  {{(data?.message || 'confirm-dialog.message') | translate}}
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color="warn" [mat-dialog-close]="ConfirmDialogResult.CANCEL">
+    {{(data?.cancelLabel || 'confirm-dialog.cancel') | translate | uppercase}}
+  </button>
+  <button mat-stroked-button color="primary" [mat-dialog-close]="ConfirmDialogResult.CONFIRM">
+    {{(data?.confirmLabel || 'confirm-dialog.confirm') | translate | uppercase}}
+  </button>
+</mat-dialog-actions>

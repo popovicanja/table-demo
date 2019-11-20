@@ -1,0 +1,23 @@
+:host {
+  font-size: 13px;
+  .container {
+    padding: 40px;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .title {
+        font-size: 28px;
+        letter-spacing: 1px;
+        font-weight: 300;
+        line-height: 40px;
+      }
+    }
+    .content {
+      padding: 40px 0;
+      app-table {
+        display: block;
+      }
+    }
+  }
+}

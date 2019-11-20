@@ -1,0 +1,126 @@
+<div class="wrapper" [class.with-spinner]="loadingIndicator === LoaderType.SPINNER">
+  <div *ngIf="loading" class="overlay"></div>
+  <mat-spinner *ngIf="loading && loadingIndicator === LoaderType.SPINNER"></mat-spinner>
+  <mat-progress-bar *ngIf="loading && loadingIndicator === LoaderType.PROGRESS_BAR" [mode]="'indeterminate'"></mat-progress-bar>
+  <table
+    [class.non-responsive]="loading"
+    matSort
+    [matSortDisabled]="!sortable"
+    (matSortChange)="onSortChange($event)"
+    [class.table-with-actions]="showActionsOnHover">
+    <!-- Table header -->
+    <tr>
+      <!-- Kolone -->
+      <th *ngIf="selectable" class="checkbox">
+        <mat-checkbox
+          color="primary"
+          (change)="onMasterCheckboxChange()"
+          [checked]="selectionModel.hasValue() && allSelected()"
+          [indeterminate]="selectionModel.hasValue() && !allSelected()">
+        </mat-checkbox>
+      </th>
+      <ng-container *ngFor="let column of columns">
+        <ng-container *ngIf="!column.hidden">
+          <th *ngIf="!column.sortable || !sortable">
+            <ng-container *ngIf="column.translated">{{column.label}}</ng-container>
+            <ng-container *ngIf="!column.translated">{{prefix + column.label | translate}}</ng-container>
+            <ng-container *ngIf="columnHeaderSuffixRefs[column.name]">
+              <ng-template [ngTemplateOutlet]="columnHeaderSuffixRefs[column.name]"></ng-template>
+            </ng-container>
+          </th>
+          <th *ngIf="column.sortable && sortable" [mat-sort-header]="column.path ? column.name + '.' + column.path.join('.') : column.name">
+            <ng-container *ngIf="column.translated">{{column.label}}</ng-container>
+            <ng-container *ngIf="!column.translated">{{prefix + column.label | translate}}</ng-container>
+            <ng-container *ngIf="columnHeaderSuffixRefs[column.name]">
+              <ng-template [ngTemplateOutlet]="columnHeaderSuffixRefs[column.name]"></ng-template>
+            </ng-container>
+          </th>
+        </ng-container>
+      </ng-container>
+      <!-- Kolona sa akcijama -->
+      <th class="actions-header">
+        <span class="buttons-wrapper">
+          <!-- Osvježi podatke -->
+          <button mat-icon-button (click)="refreshButtonClick.emit()" [matTooltip]="'table.refresh' | translate" class="app-icon-button">
+            <mat-icon>refresh</mat-icon>
+          </button>
+            <!-- Meni sa odabirom kolona za prikaz -->
+          <button mat-icon-button [matTooltip]="'table.select-columns' | translate" [matMenuTriggerFor]="columnMenu" class="app-icon-button">
+            <mat-icon>settings</mat-icon>
+          </button>
+          <mat-menu #columnMenu="matMenu">
+            <mat-selection-list #columnSelectionList>
+              <mat-list-option
+                *ngFor="let column of columns"
+                appStopClickPropagation
+                [value]="column"
+                [selected]="!column.hidden"
+                [checkboxPosition]="'before'"
+                color="primary">
+                <ng-container *ngIf="column.translated">{{column.label}}</ng-container>
+                <ng-container *ngIf="!column.translated">{{prefix + column.label | translate}}</ng-container>
+              </mat-list-option>
+            </mat-selection-list>
+          </mat-menu>
+        </span>
+      </th>
+    </tr>
+    <!-- Table body -->
+    <tr
+      *ngFor="let row of data; let index = index"
+      appAddClassOnHover="mat-elevation-z3"
+      [appAddClassOnHoverDisabled]="!showActionsOnHover"
+      [class.app-primary-background-50]="selectionModel.isSelected(row)"
+      [class.selected]="selectionModel.isSelected(row)">
+
+      <td *ngIf="selectable" class="checkbox">
+        <mat-checkbox color="primary" (change)="onCheckboxChange(row)" [checked]="selectionModel.isSelected(row)"></mat-checkbox>
+      </td>
+      <ng-container *ngFor="let column of columns">
+        <td *ngIf="!column.hidden">
+          <!-- Kolona ima custom template -->
+          <ng-container *ngIf="cellRefs[column.name]">
+            <ng-template [ngTemplateOutlet]="cellRefs[column.name]" [ngTemplateOutletContext]="{$implicit: row, index: index}"></ng-template>
+          </ng-container>
+          <!-- Kolona nema custom template -->
+          <ng-container *ngIf="!cellRefs[column.name]">
+            <ng-container [ngSwitch]="column.type">
+              <app-boolean *ngSwitchCase="ColumnType.BOOLEAN" [value]="row[column.name]"></app-boolean>
+              <app-date *ngSwitchCase="ColumnType.DATE" [value]="formatValue | executeWithArgs: row: column"></app-date>
+              <ng-container *ngSwitchDefault>{{formatValue | executeWithArgs: row: column}}</ng-container>
+            </ng-container>
+          </ng-container>
+        </td>
+      </ng-container>
+      <!-- Akcije -->
+      <td class="actions" [class.fixed]="godModeActive">
+        <span class="buttons-wrapper">
+          <!-- Custom akcije -->
+          <ng-container *ngFor="let action of rowActions">
+            <ng-template [ngTemplateOutlet]="action.templateRef" [ngTemplateOutletContext]="{$implicit: row, index: index}"></ng-template>
+          </ng-container>
+          <!-- Izmijeni -->
+          <ng-container *ngIf="editButton">
+            <button mat-icon-button (click)="editButtonClick.emit(row)" [matTooltip]="'table.edit' | translate" class="app-icon-button">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-container>
+          <!-- Izbriši -->
+          <ng-container *ngIf="deleteButton">
+            <button
+              mat-icon-button
+              appConfirmClick
+              class="app-icon-button"
+              (confirmClick)="deleteButtonClick.emit(row)"
+              [appConfirmDialogData]="confirmDeleteDialogData"
+              [matTooltip]="'table.delete' | translate">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </ng-container>
+        </span>
+      </td>
+    </tr>
+  </table>
+  <!-- Nema podataka -->
+  <div *ngIf="data?.length === 0" class="no-data">{{'table.no-data' | translate}}</div>
+</div>

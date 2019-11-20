@@ -1,0 +1,55 @@
+<form [formGroup]="form" class="paginator-container" autocomplete="off">
+
+  <div class="page-index">
+    <div class="label">
+      <span>{{'paginator.page' | translate}}: </span>
+    </div>
+    <mat-form-field class="paginator-select">
+      <mat-select  formControlName="pageIndex" *ngIf="numberOfPages < 100">
+        <mat-option *ngFor="let index of pageIndexOptions" [value]="index">{{index}}</mat-option>
+      </mat-select>
+      <select matNativeControl formControlName="pageIndex" *ngIf="numberOfPages >= 100 && numberOfPages < 1000">
+        <!-- use native select to improve performance (rendering time) -->
+        <option *ngFor="let index of pageIndexOptions" [value]="index">{{index}}</option>
+      </select>
+      <input matInput *ngIf="numberOfPages >= 1000" formControlName="pageIndex" type="number" min="1" max="{{numberOfPages}}">
+    </mat-form-field>
+  </div>
+
+  <div class="number-of-pages">
+    <div>{{'paginator.number-of-pages' | translate}}: {{numberOfPages}}</div>
+  </div>
+
+  <div class="items-per-page">
+    <div class="label">
+      <span>{{'paginator.items-per-page' | translate}}:</span>
+    </div>
+    <mat-form-field class="paginator-select">
+      <mat-select formControlName="pageSize">
+        <mat-option *ngFor="let option of pageSizeOptions" [value]="option">{{option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="range">
+    <div>{{firstItemIndex}}-{{lastItemIndex}} {{'paginator.of' | translate}} {{totalElements}}</div>
+  </div>
+
+  <div class="actions">
+    <div>
+      <button mat-icon-button (click)="first()" [disabled]="page.pageIndex === 1" [matTooltip]="'paginator.first-page' | translate">
+        <mat-icon>first_page</mat-icon>
+      </button>
+      <button mat-icon-button (click)="previous()" [disabled]="page.pageIndex === 1" [matTooltip]="'paginator.previous-page' | translate">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button mat-icon-button (click)="next()" [disabled]="page.pageIndex === numberOfPages" [matTooltip]="'paginator.next-page' | translate">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+      <button mat-icon-button (click)="last()" [disabled]="page.pageIndex === numberOfPages" [matTooltip]="'paginator.last-page' | translate">
+        <mat-icon>last_page</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</form>

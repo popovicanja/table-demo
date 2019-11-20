@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Table demo"
+  },
+  "user": {
+    "columns": {
+      "username": "Korisničko ime",
+      "first-name": "Ime",
+      "last-name": "Prezime",
+      "gender": "Pol",
+      "email": "Email",
+      "state-code": "Država",
+      "city": "Grad",
+      "phone": "Telefon",
+      "address": "Adresa"
+    },
+    "dialog": {
+      "confirm-delete": "Da li ste sigurni da želite da obrišete ovog korisnika?",
+      "edit-title": "Izmjena korisnika",
+      "create-title": "Novi korisnik"
+    },
+    "snackbar": {
+      "delete-success": "Korisnik obrisan",
+      "create-success": "Korisnik kreiran",
+      "edit-success": "Korisnik izmijenjen"
+    }
+  },
+  "gender": {
+    "Male": "Muški",
+    "Female": "Ženski"
+  },
+  "success": {
+    "edit": "Zapis uspiješno sačuvan",
+    "create": "Zapis uspiješno sačuvan",
+    "delete": "Zapis uspiješno izbrisan "
+  },
+  "form-errors": {
+    "required": "Ovo polje je obavezno",
+    "minlength": "Minimalna dužina je {{minlength.requiredLength}}",
+    "maxlength": "Maksimalna dužina je {{maxlength.requiredLength}}",
+    "min": "Minimalna vrijednost je {{min.min}}",
+    "max": "Maksimalna vrijednost je {{max.max}}",
+    "minDate": "Minimalna vrijednost je {{minDate.minDate}}",
+    "maxDate": "Maksimalna vrijednost je {{maxDate.maxDate}}",
+    "pattern": "Vrijednost ne zadovoljava šablon {{pattern.requiredPattern}}",
+    "email": "Nevalidan e-mail",
+    "invalidPositiveInteger": "Vrijednost mora biti pozitivan cio broj",
+    "invalidNumber": "Nevalidan broj",
+    "matDatepickerParse": "Nevalidan format"
+  },
+  "table": {
+    "refresh": "Osvježi",
+    "filter": "Filteri",
+    "delete": "Obriši",
+    "edit": "Izmijeni",
+    "select-columns": "Izaberi kolone za prikaz",
+    "no-data": "Nema podataka"
+  },
+  "tooltip": {
+    "refresh": "Osvježi",
+    "edit": "Izmijeni",
+    "save": "Sačuvaj",
+    "cancel": "Odustani",
+    "delete": "Obriši"
+  },
+  "paginator": {
+    "page": "Strana",
+    "number-of-pages": "Broj strana",
+    "items-per-page": "Redova po strani",
+    "of": "od",
+    "first-page": "Prva strana",
+    "last-page": "Poslednja strana",
+    "next-page": "Sledeća strana",
+    "previous-page": "Prethodna strana"
+  },
+  "snackbar": {
+    "form-invalid": "Molimo popunite formu validnim podacima"
+  },
+  "confirm-dialog": {
+    "title": "Potvrdite akciju",
+    "message": "Da li ste sigurni?",
+    "confirm": "Potvrdi",
+    "cancel": "Odustani"
+  },
+  "check-your-internet-connection": "Došlo je do greške. Molimo provjerite internet konekciju."
+}

@@ -1,0 +1,28 @@
+<div class="container">
+
+  <div class="header">
+    <div class="title">{{'app.title' | translate}}</div>
+  </div>
+
+  <div class="content">
+    <app-table
+      [dataSource]="dataSource$"
+      [tableStructure]="tableStructure"
+      [confirmDeleteDialogData]="confirmDeleteDialogData"
+      (deleteButtonClick)="onDeleteButtonClick($event)"
+      [editButton]="false"
+      (refreshButtonClick)="loadData()"
+      (sort)="onSortChange($event)"
+      class="mat-elevation-z1"
+      [loading]="loaderState.loading">
+
+      <ng-template let-row appTableCellDef="state_code">
+        <img src="https://www.countryflags.io/{{row.state_code}}/shiny/32.png" alt="{{row.state_code}}">
+      </ng-template>
+
+    </app-table>
+
+    <app-paginator [totalElements]="totalElements" (pageChange)="onPageChange($event)"></app-paginator>
+  </div>
+
+</div>

@@ -1,0 +1,10 @@
+mat-icon {
+  display: block;
+  user-select: none;
+  &.check {
+    color: green;
+  }
+  &.close {
+    color: red;
+  }
+}

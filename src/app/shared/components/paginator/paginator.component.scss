@@ -1,0 +1,35 @@
+.paginator-select {
+  width: 56px;
+}
+.paginator-container {
+  display: flex;
+  flex-wrap: wrap;
+  >:first-child {
+    margin-left: auto;
+  }
+  .page-index, .items-per-page {
+    display: flex;
+    margin-right: 32px;
+    .label {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    mat-form-field {
+      position: relative;
+      top: 3px;
+      margin-left: 8px;
+    }
+  }
+  .number-of-pages, .range, .actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .number-of-pages, .range {
+    margin-right: 30px;
+  }
+  .actions {
+    margin-right: 12px;
+  }
+}
